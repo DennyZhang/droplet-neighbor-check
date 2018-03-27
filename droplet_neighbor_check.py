@@ -13,7 +13,7 @@
 ##        --driver 'Digitalocean'
 ## --
 ## Created : <2018-02-21>
-## Updated: Time-stamp: <2018-03-26 21:35:13>
+## Updated: Time-stamp: <2018-03-26 22:03:34>
 ################################################################################
 import os, argparse, sys
 import requests, json
@@ -21,6 +21,7 @@ import re
 
 def get_droplets_from_do(digitalocean_token, name_pattern, max_droplets = 500):
     print("Calling DigitalOcean API to list all droplets")
+    sys.stdout.flush()
     headers = {'Authorization': 'Bearer %s' % (digitalocean_token), \
                'Content-Type': 'application/json'}
     url = "https://api.digitalocean.com/v2/droplets?page=1&per_page=%d" % (max_droplets)
@@ -46,6 +47,7 @@ def check_droplets_neighbor(digitalocean_token, droplets, max_droplets):
     # https://developers.digitalocean.com/documentation/v2/#list-neighbors-for-a-droplet
     for (droplet_id, droplet_name) in droplets:
         print("Check droplet neighbors for %s" % (droplet_name))
+        sys.stdout.flush()
         url = "https://api.digitalocean.com/v2/droplets/%s/neighbors" % (droplet_id)
         r = requests.get(url, headers=headers)
         res = []
