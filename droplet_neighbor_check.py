@@ -13,7 +13,7 @@
 ##        --driver 'Digitalocean'
 ## --
 ## Created : <2018-02-21>
-## Updated: Time-stamp: <2018-03-26 22:10:18>
+## Updated: Time-stamp: <2018-03-26 22:13:24>
 ################################################################################
 import os, argparse, sys
 import requests, json
@@ -87,6 +87,6 @@ if __name__ == '__main__':
     else:
         print("ERROR: below droplets are deployed in hypervisor which has more than %d" % (l.max_droplets))
         for (droplet_id, name) in droplets_problematic:
-            print("| %s  |  %s  |" %  (str(droplet_id.ljust(10, ' '), name.ljust(25, ' '))))
+            print("| %s  |  %s  |" %  (str(droplet_id.ljust(10, ' ')), name.ljust(25, ' ')))
         sys.exit(1)
 ## File: droplet_neighbor_check.py ends
