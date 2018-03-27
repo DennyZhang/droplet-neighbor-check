@@ -14,6 +14,5 @@
 ##     --driver 'Digitalocean'
 ```
 
-TODO
 <a href="https://www.dennyzhang.com"><img align="center" src="https://raw.githubusercontent.com/DennyZhang/droplet-neighbor-check/master/images/CheckDropletNeighbors.png"></a>
 Code is licensed under [MIT License](https://www.dennyzhang.com/wp-content/mit_license.txt).
