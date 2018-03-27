@@ -6,7 +6,8 @@
 
 # droplet-neighbor-check
 ```
-## Sample Usage: If more than 2 droplets in one hypervisor, report potential risks
+## Sample Usage:
+## If more than 2 droplets in one hypervisor, report potential risks
 ##   python droplet_neighbor_check.py \
 ##     --token 'd535bf5bf949b8c78XXXXXXXa' \
 ##     --max_droplets 2 \
