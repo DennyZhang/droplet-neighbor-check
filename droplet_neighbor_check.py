@@ -1,19 +1,19 @@
 #!/usr/bin/env python
 ################################################################################
 ## File: droplet_neighbor_check.py
-## Author : Denny <denny.zhang@totvs.com>
+## Author : Denny
 ##
 ## Description :
 ##    Make sure all my droplets not over-located in one hypervisor
 ##
 ##    Sample Usage: If more than 2 droplets in one hypervisor, report the potential risks
 ##      python droplet_neighbor_check.py \
-##        --driver 'Digitalocean'
 ##        --token 'd535bf5bf949b8c78XXXXXXXa' \
-##        --max_droplets 2
+##        --max_droplets 2 \
+##        --driver 'Digitalocean'
 ## --
 ## Created : <2018-02-21>
-## Updated: Time-stamp: <2018-03-26 21:25:36>
+## Updated: Time-stamp: <2018-03-26 21:34:22>
 ################################################################################
 import os, argparse, sys
 import requests, json
