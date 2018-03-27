@@ -6,14 +6,14 @@
 ## Description :
 ##    Make sure all my droplets not over-located in one hypervisor
 ##
-##    Sample Usage: If more than 2 droplets in one hypervisor, report the potential risks
+##    Sample Usage: If more than 2 droplets in one hypervisor, report potential risks
 ##      python droplet_neighbor_check.py \
 ##        --token 'd535bf5bf949b8c78XXXXXXXa' \
 ##        --max_droplets 2 \
 ##        --driver 'Digitalocean'
 ## --
 ## Created : <2018-02-21>
-## Updated: Time-stamp: <2018-03-26 21:34:22>
+## Updated: Time-stamp: <2018-03-26 21:35:13>
 ################################################################################
 import os, argparse, sys
 import requests, json
