@@ -13,10 +13,11 @@
 ##        --driver 'Digitalocean'
 ## --
 ## Created : <2018-02-21>
-## Updated: Time-stamp: <2018-03-26 22:17:42>
+## Updated: Time-stamp: <2018-03-26 22:34:19>
 ################################################################################
 import os, argparse, sys
 import requests, json
+import functools
 import re
 
 def get_droplets_from_do(digitalocean_token, name_pattern, max_droplets = 500):
@@ -42,7 +43,7 @@ def get_droplets_from_do(digitalocean_token, name_pattern, max_droplets = 500):
 def check_droplets_neighbor(digitalocean_token, droplets, max_droplets):
     headers = {'Authorization': 'Bearer %s' % (digitalocean_token), \
                'Content-Type': 'application/json'}
-    droplets_neighbor_cnt = max_droplets - 1
+    droplets_neighbor_cnt = max_droplets - 2
     res = []
     # https://developers.digitalocean.com/documentation/v2/#list-neighbors-for-a-droplet
     for (droplet_id, droplet_name) in droplets:
@@ -50,14 +51,15 @@ def check_droplets_neighbor(digitalocean_token, droplets, max_droplets):
         sys.stdout.flush()
         url = "https://api.digitalocean.com/v2/droplets/%s/neighbors" % (droplet_id)
         r = requests.get(url, headers=headers)
-        res = []
         if r.status_code != 200:
             print("Error: Fail to list droplets. errmsg: %s" % (r.text))
             sys.exit(1)
         data = json.loads(r.text)
         l = data["droplets"]
         if len(l) >= droplets_neighbor_cnt:
-            res.append((str(droplet_id), droplet_name, ','.join(l)))
+            neighbors = []
+            for item in l: neighbors.append(item['name'])
+            res.append((str(droplet_id), droplet_name, ','.join(neighbors)))
     return res
 
 if __name__ == '__main__':
@@ -86,7 +88,8 @@ if __name__ == '__main__':
         print("OK: no over-allocation issues have been found")
     else:
         print("ERROR: below droplets are deployed in hypervisor which has more than %d" % (l.max_droplets))
+        print("|  ID         |  Name                  |  Neighbors")
         for (droplet_id, name, neighbors) in droplets_problematic:
-            print("| %s  |  %s  |  %s" %  (str(droplet_id.ljust(10, ' ')), name.ljust(25, ' '), neighbors))
+            print("| %s  |  %s  |  %s" %  (str(droplet_id.ljust(10, ' ')), name.ljust(20, ' '), neighbors))
         sys.exit(1)
 ## File: droplet_neighbor_check.py ends
