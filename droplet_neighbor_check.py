@@ -13,7 +13,7 @@
 ##        --driver 'Digitalocean'
 ## --
 ## Created : <2018-02-21>
-## Updated: Time-stamp: <2018-03-26 22:34:19>
+## Updated: Time-stamp: <2018-03-26 22:38:21>
 ################################################################################
 import os, argparse, sys
 import requests, json
@@ -56,10 +56,10 @@ def check_droplets_neighbor(digitalocean_token, droplets, max_droplets):
             sys.exit(1)
         data = json.loads(r.text)
         l = data["droplets"]
-        if len(l) >= droplets_neighbor_cnt:
+        if len(l) > droplets_neighbor_cnt:
             neighbors = []
             for item in l: neighbors.append(item['name'])
-            res.append((str(droplet_id), droplet_name, ','.join(neighbors)))
+            res.append((str(droplet_id), droplet_name, ', '.join(neighbors)))
     return res
 
 if __name__ == '__main__':
