@@ -13,7 +13,7 @@
 ##        --driver 'Digitalocean'
 ## --
 ## Created : <2018-02-21>
-## Updated: Time-stamp: <2018-03-26 22:13:24>
+## Updated: Time-stamp: <2018-03-26 22:17:42>
 ################################################################################
 import os, argparse, sys
 import requests, json
@@ -57,7 +57,7 @@ def check_droplets_neighbor(digitalocean_token, droplets, max_droplets):
         data = json.loads(r.text)
         l = data["droplets"]
         if len(l) >= droplets_neighbor_cnt:
-            res.append((str(droplet_id), droplet_name))
+            res.append((str(droplet_id), droplet_name, ','.join(l)))
     return res
 
 if __name__ == '__main__':
@@ -66,7 +66,7 @@ if __name__ == '__main__':
                         default=2, help="The filepath of markdown file. ")
     parser.add_argument('--token', required=True, type=str, \
                         help="Use the token to list all droplet")
-    parser.add_argument('--driver', required=True, type=str, default='Digitalocean', \
+    parser.add_argument('--driver', required=False, type=str, default='Digitalocean', \
                         help="Which cloud provider")
     parser.add_argument('--hostname_pattern', required=False, type=str, default='', \
                         help="Filter droplets by hostname pattern. If not given, all droplets will be checked")
@@ -86,7 +86,7 @@ if __name__ == '__main__':
         print("OK: no over-allocation issues have been found")
     else:
         print("ERROR: below droplets are deployed in hypervisor which has more than %d" % (l.max_droplets))
-        for (droplet_id, name) in droplets_problematic:
-            print("| %s  |  %s  |" %  (str(droplet_id.ljust(10, ' ')), name.ljust(25, ' ')))
+        for (droplet_id, name, neighbors) in droplets_problematic:
+            print("| %s  |  %s  |  %s" %  (str(droplet_id.ljust(10, ' ')), name.ljust(25, ' '), neighbors))
         sys.exit(1)
 ## File: droplet_neighbor_check.py ends
